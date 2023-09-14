@@ -1,0 +1,57 @@
+module_hero.heroList:
+  path: '/herolist'
+  defaults:
+    _controller: '\Drupal\module_hero\Controller\HeroController::heroList'
+    _title: 'Our Super Hero LIst'
+  requirements:
+    # _permission: 'can use hero list'
+    _permission: 'access content'
+
+
+module_hero.heroform:
+  path: '/heroform'
+  defaults:
+    _form: '\Drupal\module_hero\Form\HeroForm'
+    _title: 'Who will win'
+  requirements:
+    _permission: 'can see hero form'
+
+module_hero.exampleform:
+  path: '/ex-form'
+  defaults:
+    _form: '\Drupal\module_hero\Form\ExampleForm'
+    _title: 'Who will win'
+  requirements:
+    _permission: 'access content'
+
+module_hero.ajaxheroform:
+  path: '/ajaxheroform'
+  defaults:
+    _form: '\Drupal\module_hero\Form\AjaxHeroForm'
+    _title: 'Ajax hero form -- Who will win'
+  requirements:
+    _permission: 'access content'
+
+module_hero.confighero:
+  path: '/admin/hero'
+  defaults:
+    _form: '\Drupal\module_hero\Form\HeroConfigForm'
+    _title: 'Our admin hero config'
+  requirements:
+    _permission: 'administer site configuration'
+
+# module_hero.confighero:
+#   path: '/admin/hero'
+#   defaults:
+#     _form: '\Drupal\module_hero\Form\HeroConfigForm'
+#     _title: 'Our admin hero config'
+#   requirements:
+#     _permission: 'administer site configuration'
+
+module_hero.example_settings:
+  path: '/admin/eg'
+  defaults:
+    _form: '\Drupal\module_hero\Form\ExampleSettingsForm'
+    _title: 'example'
+  requirements:
+    _permission: 'administer site configuration'

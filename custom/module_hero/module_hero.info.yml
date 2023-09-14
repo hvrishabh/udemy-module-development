@@ -1,0 +1,4 @@
+name: "Module HerO"
+description: it is the module decription
+type: module
+core_version_requirement: ^9 || ^10

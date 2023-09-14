@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * @file
+ * for implementing hooks
+ */
+
+/**
+ * Implement hook_theme(),
+ */
+function module_hero_theme($existing, $type, $theme, $path)
+{
+
+    return [
+        'hero_list' => [
+            'variables' => [
+                'items' => [],
+                'title' => '',
+            ],
+        ],
+    ];
+}
+
+/**
+ * Implement hook_form_alter()
+ * in this we are altering the Article form in drupal.
+ */
+// function module_hero_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+// {
+//     // kint($form);
+//     // die();
+//     // echo ("hello");
+//     echo "<pre>";
+//     // print_r($form);
+//     echo "</pre>";
+//     // devel_dump($form);
+//     if($form_id == 'node_article_form'){
+//         $form['field_tags']['#access'] = FALSE;
+//         $form['title']['widget'][0]['value']['#title'] = t('Article Title changed One');
+
+//         $form['#validate'][]= '_module_hero_article_validate';
+//     }
+
+//     /**
+//      * Implementation of custom validation function
+//      */
+
+// }
+// function _module_hero_article_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state){
+//     // kint($form_state->getValues('title'));
+//     echo "hello";
+
+// }
+
+function module_hero_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+
+    // Add a new validation function..
+    if ($form_id == 'node_article_form') {
+        $form['field_tags']['#access'] = false;
+        $form['title']['widget'][0]['value']['#title'] = t('Article Title changed One');
+        $form['#validate'][] = 'validation_article_function';
+    }
+}
+
+/**
+ * Custom validation callback
+ */
+function validation_article_function($form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+
+    // Do your validation.
+    // kint($form_state->getValues());
+    // echo "hello";
+    if (is_numeric($form_state->getValue('title')[0]['value'])) {
+        $form_state->setErrorByName("title" . t('Title should not be a number'));
+    }
+    return $form = [
+        '#type' => 'markup',
+        '#markup' => 'This is the call for validation of article type',
+    ];
+
+}
+
+/**
+ * Summary of module_hero_entity_presave
+ */
+function module_hero_entity_presave(Drupal\Core\Entity\EntityInterface $entity)
+{
+    // kint($entity->bundle());
+    // die();
+    if ($entity->bundle() == 'article') {
+        \Drupal::messenger()->addMessage('we are resaving our article with name '.$entity->get('title')->getValue()[0]['value']);
+
+    }
+}
+
